@@ -1,0 +1,51 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FamilyWellness" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/statusbar</item>
+        <item name="colorPrimary">@color/statusbar</item>
+        <item name="colorPrimaryDark">@color/statusbar</item>
+        <item name="colorAccent">@color/statusbar</item>
+
+
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!--Toolbar theme-->
+    <style name="CustomToolbarStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!--Menu Item Theme-->
+    <style name="CustomPopupStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/white</item>
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">-4dp</item>
+    </style>
+
+    <!--Input Theme-->
+    <style name="CustomInputStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/colorStandardBlack</item>
+        <item name="android:theme">@color/colorDarkBlue</item>
+    </style>
+
+    <style name="NumberPickerTheme" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/bg_layer_3</item>
+        <item name="colorControlNormal">@color/text_color</item>
+        <item name="android:textColorPrimary">@color/text_color</item>
+        <item name="android:background">@color/bg_layer_3</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@android:color/transparent</item>
+        <!-- Add more customizations as needed -->
+    </style>
+
+    <style name="Theme.FamilyWellness" parent="Base.Theme.FamilyWellness" />
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+       id="@+id/homeID"
+       title="Home"
+       icon="@drawable/home" />
+    <tab
+       id="@+id/chatID"
+       title="Chat"
+       iconTint="@color/white"
+       icon="@drawable/chat" />
+    <tab
+       id="@+id/profileID"
+       title="Profile"
+       iconTint="@color/white"
+       icon="@drawable/user" />
+</tabs>

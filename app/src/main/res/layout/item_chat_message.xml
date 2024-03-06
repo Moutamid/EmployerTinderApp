@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?><!-- item_chat_message.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/left_message_container"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/text_view_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/left_chat"
+            android:backgroundTint="#E4E4E4"
+            android:fontFamily="@font/kanit_regular"
+            android:gravity="end"
+            android:maxWidth="240dp"
+            android:padding="10dp"
+            android:text="Sample message"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_13sdp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/right_message_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/receiver_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/right_chat"
+            android:backgroundTint="@color/colorAccent"
+            android:fontFamily="@font/kanit_regular"
+            android:maxWidth="240dp"
+            android:padding="10dp"
+            android:text="Sample message"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_13sdp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

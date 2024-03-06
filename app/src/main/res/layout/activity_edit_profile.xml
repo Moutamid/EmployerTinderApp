@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/main_layout">
+    <ImageView
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="17dp"
+        android:onClick="backPress"
+        android:layout_marginTop="20dp"
+
+        android:src="@drawable/baseline_arrow_back_ios_24" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="57dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/kanit_bold"
+        android:gravity="left"
+        android:text="Edit Profile"
+        android:textColor="#000"
+        android:textSize="22dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/_90sdp"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_bg"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:hint="Name"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/new_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_bg"
+            android:hint="@string/hint_new_email"
+            android:enabled="false"
+            android:padding="10dp"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true" />
+        <TextView
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/kanit_regular"
+            android:text="Your email address can not be changed"
+            android:textColor="#817E7E"
+            android:textSize="@dimen/_14sdp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sign_out"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/roundbutton"
+            android:text="Save changes"
+            android:fontFamily="@font/kanit_regular"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+      </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
