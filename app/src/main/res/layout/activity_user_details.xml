@@ -13,35 +13,48 @@
         android:background="@color/white">
 
 
-        <ImageView
-            android:id="@+id/backArrow"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginLeft="17dp"
-            android:layout_marginTop="20dp"
-            android:onClick="backPress"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:elevation="@dimen/_7sdp">
 
-            android:src="@drawable/baseline_arrow_back_ios_24" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/backArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginBottom="40dp"
+                    android:onClick="back"
+                    android:src="@drawable/baseline_arrow_back_ios_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0" />
 
-        <TextView
-            android:id="@+id/PageTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="57dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/kanit_bold"
-            android:gravity="left"
-            android:text="User Details"
-            android:textColor="#000"
-            android:textSize="22dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/kanit_extra_bold"
+                    android:text="User Details"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/PageTitle"
-            android:layout_marginTop="16dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="66dp"
             android:background="@color/white"
             android:paddingStart="5dp"
 
@@ -50,7 +63,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
 
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -326,36 +339,36 @@
                 </LinearLayout>
 
 
-                <RelativeLayout
-                    android:id="@+id/chat_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="60dp"
-                    android:layout_marginBottom="17dp"
-                    android:background="@drawable/roundbutton"
-                    android:backgroundTint="@color/statusbar">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:fontFamily="@font/kanit_regular"
-                        android:gravity="center"
-                        android:text="Start Chat"
-                        android:textAllCaps="false"
-
-                        android:textColor="#FFF"
-                        android:textSize="17dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
 
             </LinearLayout>
         </ScrollView>
 
+        <RelativeLayout
+            android:id="@+id/chat_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="17dp"
+            android:background="@drawable/bg_button_register"
+            android:backgroundTint="@color/statusbar">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/kanit_regular"
+                android:gravity="center"
+                android:text="Start Chat"
+                android:textAllCaps="false"
+
+                android:textColor="#FFF"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
     </RelativeLayout>
 

@@ -43,7 +43,6 @@ public class HomePage extends AppCompatActivity {
         bottomBar = findViewById(R.id.bottomBar);
         FragmentTitle = (TextView) findViewById(R.id.FragmentTitle);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.Bottom_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(naveListener);
         if (Build.VERSION.SDK_INT > 32) {
             if (!shouldShowRequestPermissionRationale("112")) {
                 getNotificationPermission();
@@ -82,28 +81,6 @@ public class HomePage extends AppCompatActivity {
         });
 
     }
-
-
-    private BottomNavigationView.OnNavigationItemSelectedListener naveListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment SelectedFragment = null;
-            int id = item.getItemId();
-            if (id == R.id.ProductID) {
-                SelectedFragment = new UserListFragment();
-                FragmentTitle.setText("Home");
-            } else if (id == R.id.OffersID) {
-                SelectedFragment = new InboxFragment();
-                FragmentTitle.setText("Inbox");
-            } else if (id == R.id.SalesMenID) {
-                SelectedFragment = new ProfileFragment();
-                FragmentTitle.setText("Profile");
-            }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, SelectedFragment).commit();
-            return true;
-        }
-    };
 
 
     private void CheckLogout() {

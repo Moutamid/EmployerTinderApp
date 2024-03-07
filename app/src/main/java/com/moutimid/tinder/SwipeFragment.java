@@ -1,17 +1,25 @@
 package com.moutimid.tinder;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
+import androidx.fragment.app.Fragment;
+
+import com.fxn.stash.Stash;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.tinder.R;
+import com.moutimid.tinder.model.UserModel;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.Duration;
@@ -19,53 +27,37 @@ import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SwipeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class SwipeFragment extends Fragment {
     CardStackLayoutManager manager;
     CardStackView cardStackView;
+    private List<UserModel> userList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // Firebase
+    private DatabaseReference usersRef;
 
     public SwipeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SwipeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SwipeFragment newInstance(String param1, String param2) {
-        SwipeFragment fragment = new SwipeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static SwipeFragment newInstance() {
+        return new SwipeFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        // Initialize Firebase Realtime Database reference
+        usersRef = FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users");
+
+        // Initialize user list
+        userList = new ArrayList<>();
+
+        // Fetch data from Firebase
+        fetchDataFromFirebase();
     }
 
     @Override
@@ -74,7 +66,42 @@ public class SwipeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_swipe, container, false);
         manager = new CardStackLayoutManager(getContext());
-        CardStackAdapter adapter = new CardStackAdapter(getActivity(), "Hania");
+        manager = new CardStackLayoutManager(getContext(), new CardStackListener() {
+            @Override
+            public void onCardDragging(Direction direction, float ratio) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onCardSwiped(Direction direction) {
+
+              if (direction == Direction.Right) {
+                    // Right swipe
+                    showToast("Right Swipe!");
+                }
+            }
+
+            @Override
+            public void onCardRewound() {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onCardCanceled() {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onCardAppeared(View view, int position) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onCardDisappeared(View view, int position) {
+                // Not needed for this implementation
+            }
+        });
+        CardStackAdapter adapter = new CardStackAdapter(getActivity(), userList);
         cardStackView = view.findViewById(R.id.card_stack_view);
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
@@ -89,9 +116,33 @@ public class SwipeFragment extends Fragment {
         manager.setCanScrollVertical(true);
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
         manager.setOverlayInterpolator(new LinearInterpolator());
+
+
         return view;
     }
 
+    private void fetchDataFromFirebase() {
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    UserModel userModel = snapshot.getValue(UserModel.class);
+                    if (userModel.type.equals("Candidate")) {
+                        userList.add(userModel);
+                    }
+                }
+                if (cardStackView.getAdapter() != null) {
+                    cardStackView.getAdapter().notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle errors
+            }
+        });
+    }
 
     public void like() {
         new SwipeAnimationSetting.Builder()
@@ -102,4 +153,12 @@ public class SwipeFragment extends Fragment {
         cardStackView.swipe();
     }
 
+    private void showToast(String message) {
+        Intent intent = new Intent(getContext(), UserDetailsActivity.class);
+        Stash.put("user", CardStackAdapter.userModel_current);
+        startActivity(intent);
+    }
 }
+
+
+

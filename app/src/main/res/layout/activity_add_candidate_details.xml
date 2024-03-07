@@ -6,28 +6,46 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/shape"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
-        android:onClick="back"
-        android:src="@drawable/baseline_arrow_back_ios_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:elevation="@dimen/_7sdp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                android:onClick="back"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/kanit_extra_bold"
+                android:text="Personal Details"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/shape"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
@@ -40,13 +58,14 @@
             android:fontFamily="@font/kanit_extra_bold"
             android:text="Add Personal Details"
             android:textSize="30dp"
+            android:visibility="gone"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="90dp"
             android:fontFamily="@font/kanit_medium"
             android:text="Upload profile image here"
             android:textColor="#817E7E"
@@ -82,24 +101,27 @@
             android:layout_marginEnd="30dp"
             android:src="@drawable/resume" />
 
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/roundbutton"
-            android:fontFamily="@font/kanit_medium"
-            android:gravity="center"
-            android:text="Submit"
-            android:textColor="@color/white"
-            android:textSize="16dp" />
+
 
 
     </LinearLayout>
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:background="@drawable/bg_button_register"
+        android:fontFamily="@font/kanit_medium"
+        android:gravity="center"
+        android:text="Submit"
 
+        android:textColor="@color/white"
+        android:textSize="16dp" />
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="30dp"

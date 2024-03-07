@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#104378</color>
-    <color name="colorPrimaryDark">#104378</color>
-    <color name="statusbarcolorAccent">#104378</color>
-    <color name="colorAccent">#104378</color>
+    <color name="colorPrimary">#4401C4</color>
+    <color name="colorPrimaryDark">#4401C4</color>
+    <color name="statusbarcolorAccent">#4401C4</color>
+    <color name="colorAccent">#4401C4</color>
 
     <color name="white">#ffffff</color>
     <color name="colorRed">#EB3349</color>
@@ -32,12 +32,12 @@
     <color name="obsess">#FD802E</color>
     <color name="extremely_obses">#F95353</color>
 
-    <color name="light_green">#104378</color>
-    <color name="dark_green">#104378</color>
+    <color name="light_green">#4401C4</color>
+    <color name="dark_green">#4401C4</color>
 
     <color name="background">#fff</color>
-    <color name="statusbar">#104378</color>
-    <color name="app_color">#104378</color>
+    <color name="statusbar">#4401C4</color>
+    <color name="app_color">#4401C4</color>
     <color name="textColor">#535353</color>
 
     <color name="seed">#3BBAA6</color>

@@ -42,10 +42,11 @@
         app:menu="@menu/admin_bottom_menu" />
     <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/bottomBar"
+        app:iconTintActive="@color/app_color"
+        app:iconTint="#BCBCBC"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:padding="5dp"
         android:layout_alignParentBottom="true"
-        app:backgroundColor="@color/colorPrimary"
         app:menu="@menu/bottom_menu"/>
 </RelativeLayout>

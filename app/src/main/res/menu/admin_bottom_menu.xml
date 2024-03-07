@@ -2,22 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/ProductID"
+        android:id="@+id/exploreID"
+        android:title="Explore"
+        android:icon="@drawable/reeds_icon"/>
+  <item
+        android:id="@+id/homeID"
         android:title="Home"
-        android:icon="@drawable/home"/>
+        android:icon="@drawable/search_icon"/>
 
     <item
-        android:id="@+id/OffersID"
-        android:title="Chat"
+        android:id="@+id/chatID"
+        android:title="Inbox"
 
         android:iconTint="@color/white"
-        android:icon="@drawable/chat"/>
+        android:icon="@drawable/chatting"/>
 
 
     <item
-        android:id="@+id/SalesMenID"
+        android:id="@+id/profileID"
         android:title="Profile"
         android:iconTint="@color/white"
-        android:icon="@drawable/user"/>
+        android:icon="@drawable/profile_icon"/>
 
 </menu>

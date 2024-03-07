@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,40 +33,26 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
-    private ProgressBar progressBar;
-    private TextView btnSignup, btnReset;
+    private TextView btnReset;
     Button btnLogin;
+    private TextInputLayout emailtextInputLayout;
+    private EditText inputEmail;
 
+    private TextInputLayout passwordtextInputLayout;
+    private EditText inputPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-
-        // set the view now
         setContentView(R.layout.activity_login);
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
         inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignup = (TextView) findViewById(R.id.btn_signup);
+        inputPassword = (EditText) findViewById(R.id.text_password_input_edit_text);
         btnLogin = (Button) findViewById(R.id.btn_login);
-        btnReset = (TextView) findViewById(R.id.btn_reset_password);
-
+        btnReset = (TextView) findViewById(R.id.forgot_pass);
         auth = FirebaseAuth.getInstance();
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
-            }
-        });
 
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,12 +67,12 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
-                    show_toast("Email address is not yet provided", 0);
+                    inputEmail.setError("Please Enter");
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    show_toast("Password is not yet provided", 0);
+                    inputPassword.setError("Please Enter");
 
                     return;
                 }
@@ -96,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
                                     if (password.length() < 6) {
                                         show_toast(getString(R.string.minimum_password), 0);
@@ -141,5 +127,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void show_toast(String message, int type) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void back(View view) {
+        onBackPressed();
     }
 }

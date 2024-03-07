@@ -18,8 +18,9 @@
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
-                android:layout_height="120dp"
+                android:layout_height="90dp"
                 android:src="@drawable/logo"
+                android:tint="@color/app_color"
                 app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -32,26 +33,11 @@
                 android:layout_marginStart="70dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="70dp"
-                android:fontFamily="@font/kanit_extra_bold"
-                android:gravity="center"
-                android:text="REEDCOM"
-                android:textColor="@color/colorPrimary"
-
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="70dp"
                 android:fontFamily="@font/kanit_regular"
                 android:gravity="center"
                 android:text="Revolutionize Your Hiring Process\n Swipe, Connect, Hire with Ease!"
                 android:textColor="#34343F"
-                android:textSize="15dp"
+                android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 

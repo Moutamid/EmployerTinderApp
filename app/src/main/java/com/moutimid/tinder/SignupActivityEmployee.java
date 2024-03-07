@@ -31,8 +31,7 @@ import java.util.Objects;
 public class SignupActivityEmployee extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword, inputName, inputConfirmPassword;
-    private Button btnSignUp;
-    private TextView btnSignIn;
+    private Button btn_login;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
 
@@ -46,19 +45,11 @@ public class SignupActivityEmployee extends AppCompatActivity {
 
         inputName = (EditText) findViewById(R.id.name);
         inputConfirmPassword = (EditText) findViewById(R.id.confirm_password);
-        btnSignIn = (TextView) findViewById(R.id.sign_in_button);
-        btnSignUp = (Button) findViewById(R.id.sign_up_button);
+        btn_login = (Button) findViewById(R.id.btn_login);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

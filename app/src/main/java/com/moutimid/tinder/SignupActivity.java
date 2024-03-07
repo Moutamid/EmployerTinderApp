@@ -35,7 +35,6 @@ public class SignupActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword, inputName, inputConfirmPassword;
     private EditText modalitiesTextInputEditText, timeTextInputEditText, populationTextInputEditText;
     private Button btnSignUp;
-    private TextView btnSignIn;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
     String selectedText;
@@ -47,7 +46,6 @@ public class SignupActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         inputName = (EditText) findViewById(R.id.name);
         inputConfirmPassword = (EditText) findViewById(R.id.confirm_password);
-        btnSignIn = (TextView) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -56,13 +54,6 @@ public class SignupActivity extends AppCompatActivity {
         populationTextInputEditText = (EditText) findViewById(R.id.populationTextInputEditText);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                finish();
-            }
-        });
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

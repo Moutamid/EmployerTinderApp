@@ -44,14 +44,13 @@ public class MainActivity extends AppCompatActivity {
         bottomBar = findViewById(R.id.bottomBar);
         FragmentTitle = (TextView) findViewById(R.id.FragmentTitle);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.Bottom_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(naveListener);
         if (Build.VERSION.SDK_INT > 32) {
             if (!shouldShowRequestPermissionRationale("112")) {
                 getNotificationPermission();
             }
         }
         Fragment SelectedFragment = null;
-        SelectedFragment = new UserListFragment();
+        SelectedFragment = new SwipeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, SelectedFragment).commit();
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -63,15 +62,18 @@ public class MainActivity extends AppCompatActivity {
 
         bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
-            public boolean onItemSelect(int i) {
+            public boolean onItemSelect(int id) {
                 Fragment SelectedFragment = null;
-                if (i == 0) {
+                if (id == 0) {
+                    SelectedFragment = new SwipeFragment();
+                    FragmentTitle.setText("Explore");
+                } else if (id == 1) {
                     SelectedFragment = new UserListFragment();
                     FragmentTitle.setText("Home");
-                } else if (i == 1) {
+                } else if (id == 2) {
                     SelectedFragment = new InboxFragment();
                     FragmentTitle.setText("Inbox");
-                } else if (i == 2) {
+                } else if (id ==3) {
                     SelectedFragment = new ProfileFragment();
                     FragmentTitle.setText("Profile");
                 }
@@ -85,26 +87,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener naveListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment SelectedFragment = null;
-            int id = item.getItemId();
-            if (id == R.id.ProductID) {
-                SelectedFragment = new UserListFragment();
-                FragmentTitle.setText("Home");
-            } else if (id == R.id.OffersID) {
-                SelectedFragment = new InboxFragment();
-                FragmentTitle.setText("Inbox");
-            } else if (id == R.id.SalesMenID) {
-                SelectedFragment = new ProfileFragment();
-                FragmentTitle.setText("Profile");
-            }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, SelectedFragment).commit();
-            return true;
-        }
-    };
 
 
     private void CheckLogout() {

@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 public class UserDetailsActivity extends AppCompatActivity {
     private RelativeLayout pBody;
     private ImageView backArrow;
-    private TextView pageTitle, productName, edtEmail, edtPhone, iAm, time, modalities, population;
+    private TextView productName, edtEmail, edtPhone, iAm, time, modalities, population;
     private ImageView userImage, resume;
 
     private RelativeLayout chatBtn;
@@ -28,10 +28,8 @@ public class UserDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_details);
         pBody = findViewById(R.id.PBody);
         backArrow = findViewById(R.id.backArrow);
-        pageTitle = findViewById(R.id.PageTitle);
         productName = findViewById(R.id.name);
         edtEmail = findViewById(R.id.edtEmail);
-//        edtPhone = findViewById(R.id.edtPhone);
         iAm = findViewById(R.id.i_am);
         time = findViewById(R.id.time);
         modalities = findViewById(R.id.modalities);
@@ -42,7 +40,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                onBackPressed();
             }
         });
         UserModel user = (UserModel) Stash.getObject("user", UserModel.class);
@@ -78,7 +76,6 @@ public class UserDetailsActivity extends AppCompatActivity {
         UserModel user = (UserModel) Stash.getObject("user", UserModel.class);
         productName.setText(user.name);
         edtEmail.setText(user.email);
-//        edtPhone.setText(user.phone);
         iAm.setText(user.selectedText);
         time.setText(user.time_in_fields);
         modalities.setText(user.modalities);
