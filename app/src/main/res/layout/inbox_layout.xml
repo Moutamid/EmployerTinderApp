@@ -22,12 +22,12 @@
             app:cardElevation="2sp">
 
             <ImageView
-
                 android:id="@+id/profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/model2" />
+                android:padding="8dp"
+                android:src="@drawable/logo" />
 
         </androidx.cardview.widget.CardView>
 

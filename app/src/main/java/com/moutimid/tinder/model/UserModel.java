@@ -18,6 +18,8 @@ public class UserModel implements Serializable {
     public String pdfUrl;
     public String type;
     public String selectedText;
+    public Boolean premium;
+    private static final String PAY_PLAN = "pay_plan";
 
     public UserModel() {
     }
@@ -108,5 +110,14 @@ public class UserModel implements Serializable {
 
     public void setProfile_img(String profile_img) {
         this.profile_img = profile_img;
+    }
+
+    public String getPayPlan() {
+        String payPlan = (PAY_PLAN);
+        if (payPlan != null) {
+            return payPlan;
+        } else {
+            return "";
+        }
     }
 }

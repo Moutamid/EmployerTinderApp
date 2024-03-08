@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -31,12 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SwipeFragment extends Fragment {
-    CardStackLayoutManager manager;
-    CardStackView cardStackView;
+    private CardStackLayoutManager manager;
+    private CardStackView cardStackView;
     private List<UserModel> userList;
-
-    // Firebase
     private DatabaseReference usersRef;
+    TextView name;
 
     public SwipeFragment() {
         // Required empty public constructor
@@ -50,22 +50,19 @@ public class SwipeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Initialize Firebase Realtime Database reference
         usersRef = FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users");
 
-        // Initialize user list
         userList = new ArrayList<>();
 
-        // Fetch data from Firebase
         fetchDataFromFirebase();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_swipe, container, false);
-        manager = new CardStackLayoutManager(getContext());
+        name=view.findViewById(R.id.name);
+
         manager = new CardStackLayoutManager(getContext(), new CardStackListener() {
             @Override
             public void onCardDragging(Direction direction, float ratio) {
@@ -74,10 +71,10 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onCardSwiped(Direction direction) {
-
-              if (direction == Direction.Right) {
-                    // Right swipe
-                    showToast("Right Swipe!");
+                UserModel swipedUser = userList.get(manager.getTopPosition() - 1);
+                Stash.put(swipedUser.uid, true);
+                if (direction == Direction.Right) {
+                    showToast();
                 }
             }
 
@@ -101,6 +98,7 @@ public class SwipeFragment extends Fragment {
                 // Not needed for this implementation
             }
         });
+
         CardStackAdapter adapter = new CardStackAdapter(getActivity(), userList);
         cardStackView = view.findViewById(R.id.card_stack_view);
         cardStackView.setLayoutManager(manager);
@@ -117,7 +115,6 @@ public class SwipeFragment extends Fragment {
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
         manager.setOverlayInterpolator(new LinearInterpolator());
 
-
         return view;
     }
 
@@ -128,13 +125,20 @@ public class SwipeFragment extends Fragment {
                 userList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserModel userModel = snapshot.getValue(UserModel.class);
-                    if (userModel.type.equals("Candidate")) {
+                    if (!Stash.getBoolean(userModel.uid, false) && userModel.type.equals("Candidate")) {
                         userList.add(userModel);
                     }
+
+                }
+                if(userList.size()<1)
+                {
+                    name.setVisibility(View.VISIBLE);
+
                 }
                 if (cardStackView.getAdapter() != null) {
                     cardStackView.getAdapter().notifyDataSetChanged();
                 }
+
             }
 
             @Override
@@ -153,12 +157,14 @@ public class SwipeFragment extends Fragment {
         cardStackView.swipe();
     }
 
-    private void showToast(String message) {
-        Intent intent = new Intent(getContext(), UserDetailsActivity.class);
-        Stash.put("user", CardStackAdapter.userModel_current);
-        startActivity(intent);
+    private void showToast() {
+        if (!Stash.getBoolean("premium")) {
+            CustomDialogClass cdd = new CustomDialogClass(getActivity());
+            cdd.show();
+        } else {
+            Intent intent = new Intent(getContext(), UserDetailsActivity.class);
+            Stash.put("user", CardStackAdapter.userModel_current);
+            getContext().startActivity(intent);
+        }
     }
 }
-
-
-

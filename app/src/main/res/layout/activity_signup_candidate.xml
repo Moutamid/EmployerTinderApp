@@ -41,12 +41,16 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_90sdp"
+    >
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:orientation="vertical"
 
         android:padding="@dimen/activity_horizontal_margin">
@@ -78,7 +82,7 @@
             android:layout_height="52dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
@@ -98,7 +102,7 @@
             android:layout_height="52dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
@@ -109,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#00000000"
-                android:hint="How long in the field?"
+                android:hint="How many years experience?"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +122,7 @@
             android:layout_height="52dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
@@ -139,7 +143,7 @@
             android:layout_height="52dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
@@ -160,7 +164,7 @@
             android:layout_height="52dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
@@ -180,7 +184,7 @@
             android:layout_height="52dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
@@ -200,8 +204,8 @@
             android:layout_marginStart="@dimen/_30sdp"
             android:layout_marginEnd="@dimen/_30sdp"
             android:fontFamily="@font/kanit_regular"
-            android:text="Are you?"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:text="Are you an "
+            android:layout_marginTop="10dp"
             android:textColor="#000"
             android:textSize="@dimen/_14sdp" />
 
@@ -212,24 +216,27 @@
             android:layout_marginStart="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_30sdp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <RadioButton
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RP"
+                android:text="RP(Registered Psychotherapist)"
                 android:textColor="@color/black" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RSW"
+                android:text="RSW(Registered Social Worker)"
                 android:textColor="@color/black" />
         </RadioGroup>
     </LinearLayout>
+
+</ScrollView>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sign_up_button"
         android:layout_width="fill_parent"

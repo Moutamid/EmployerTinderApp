@@ -73,9 +73,19 @@ public class UserListFragment extends Fragment implements UserAdapter.OnItemClic
 
     @Override
     public void onItemClick(int position) {
-        UserModel selectedUser = userList.get(position);
-        Intent intent = new Intent(getActivity(), UserDetailsActivity.class);
-        Stash.put("user", selectedUser);
-        startActivity(intent);
+
+        if (!Stash.getBoolean("premium")) {
+            CustomDialogClass cdd = new CustomDialogClass(getActivity());
+            cdd.show();
+        }
+        else
+        {
+            UserModel selectedUser = userList.get(position);
+            Intent intent = new Intent(getActivity(), UserDetailsActivity.class);
+            Stash.put("user", selectedUser);
+            startActivity(intent);
+        }
+
+
     }
 }
