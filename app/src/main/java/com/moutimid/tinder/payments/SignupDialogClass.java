@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.moutamid.tinder.R;
 import com.moutimid.tinder.MainActivity;
-import com.moutimid.tinder.WelcomeActivity;
 import com.moutimid.tinder.model.UserModel;
 
 public class SignupDialogClass extends Dialog implements
@@ -53,13 +52,13 @@ public class SignupDialogClass extends Dialog implements
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.yes) {
-            Intent intent = new Intent(getContext(), MainActivity.class);
             Stash.put("premium", true);
             UserModel employeeUserModel = (UserModel) Stash.getObject("employee_user_model", UserModel.class);
 
             FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(employeeUserModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
+                    Intent intent = new Intent(getContext(), MainActivity.class);
                     Toast.makeText(c, "Account is created successfully", Toast.LENGTH_SHORT).show();
                     c.startActivity(intent);
                     c.finishAffinity();

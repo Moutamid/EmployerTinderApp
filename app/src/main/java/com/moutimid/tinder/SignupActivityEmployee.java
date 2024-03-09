@@ -128,6 +128,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
+                                    lodingbar.dismiss();
                                     show_data("Authentication failed." + task.getException(), 0);
                                 } else {
 
@@ -145,6 +146,8 @@ public class SignupActivityEmployee extends AppCompatActivity {
                                     Stash.put("type", "Employer");
                                     Stash.put("employee_user_model", userModel);
                                     Stash.put("employee_name", name);
+                                    Stash.put("premium", false);
+
                                     lodingbar.dismiss();
 
                                     SignupDialogClass cdd = new SignupDialogClass(SignupActivityEmployee.this);

@@ -35,12 +35,11 @@ public class SplashScreen extends AppCompatActivity {
             String type = Stash.getString("type");
             Log.d("dtaa", type + " test");
             if (type.equals("Employer")) {
-//                if (!Stash.getBoolean("premium")) {
-//                    SignupDialogClass cdd = new SignupDialogClass(SplashScreen.this);
-//                    cdd.show();
-//                } else {
+                if (!Stash.getBoolean("premium")) {
+                    QuickHelp.goToActivityAndFinish(this, WelcomeActivity.class);
+                } else {
                     QuickHelp.goToActivityAndFinish(this, MainActivity.class);
-//                }
+                }
             } else {
                 QuickHelp.goToActivityAndFinish(this, HomePage.class);
             }
