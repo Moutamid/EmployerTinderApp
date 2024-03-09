@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
@@ -124,6 +125,9 @@ public class AddCandidateDetailsActivity extends AppCompatActivity {
                     Map<String, Object> map = new HashMap<>();
                     map.put("profile_img", imageUrl);
                     map.put("pdfUrl", pdfUrl);
+
+                    Stash.put("cand_img",imageUrl );
+                    Stash.put("pdfUrl",pdfUrl );
 
                     databaseReference.updateChildren(map).addOnCompleteListener(updateTask -> {
                         if (updateTask.isSuccessful()) {

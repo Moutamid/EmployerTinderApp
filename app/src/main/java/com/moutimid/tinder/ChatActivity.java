@@ -1,6 +1,10 @@
 package com.moutimid.tinder;
 // ChatActivity.java
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.icu.lang.UCharacter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,11 +30,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.tinder.R;
 import com.moutimid.tinder.helpers.NotificationSender;
+import com.moutimid.tinder.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -47,7 +53,6 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         name_str = getIntent().getStringExtra("name");
         TextView name = findViewById(R.id.name);
         name.setText(name_str);
@@ -61,6 +66,36 @@ public class ChatActivity extends AppCompatActivity {
 
         selectedUserId = getIntent().getStringExtra("selected_user_id");
         Log.d("dataa", selectedUserId + "");
+        Dialog lodingbar = new Dialog(ChatActivity.this);
+        lodingbar.setContentView(R.layout.loading);
+        Objects.requireNonNull(lodingbar.getWindow()).setBackgroundDrawable(new ColorDrawable(UCharacter.JoiningType.TRANSPARENT));
+        lodingbar.setCancelable(false);
+        lodingbar.show();
+
+        FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(selectedUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserModel user = snapshot.getValue(UserModel.class);
+                Stash.put("employee_details_user_model", user);
+                lodingbar.dismiss();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                lodingbar.dismiss();
+
+            }
+        });
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Stash.getString("type").equals("Candidate")) {
+                    startActivity(new Intent(ChatActivity.this, CandidateDetailsActivity.class));
+                }
+            }
+        });
+
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -132,7 +167,6 @@ public class ChatActivity extends AppCompatActivity {
                 Map<String, Object> lastMessageUpdates = new HashMap<>();
                 lastMessageUpdates.put("/" + currentUserId + "/" + selectedUserId + "/lastMessage", messageText);
                 lastMessageUpdates.put("/" + selectedUserId + "/" + currentUserId + "/lastMessage", messageText);
-
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 firebaseDatabase.getReference().child("TinderEmployeeApp").child("messages").updateChildren(childUpdates);
                 firebaseDatabase.getReference().child("TinderEmployeeApp").child("lastMessage").updateChildren(lastMessageUpdates);
@@ -141,7 +175,7 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String fcmToken = dataSnapshot.child("fcmToken").getValue().toString();
-                        String userName = Stash.getString("user_name");
+                        String userName = Stash.getString("employee_name");
                         NotificationSender.sendNotificationToUser(ChatActivity.this, fcmToken,userName, "Sends a message '" +messageText+"' ");
                     }
 
@@ -150,7 +184,6 @@ public class ChatActivity extends AppCompatActivity {
                         System.err.println("Failed to read user's FCM token: " + databaseError.getMessage());
                     }
                 });
-
                 editTextMessage.setText("");
             }
         } else {

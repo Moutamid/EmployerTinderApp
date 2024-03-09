@@ -38,6 +38,7 @@ public class EditProfileCandidateActivity extends AppCompatActivity {
     String selectedText;
     RadioButton rsw;
     RadioButton rp;
+    RadioButton admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class EditProfileCandidateActivity extends AppCompatActivity {
         inputEmail = (EditText) findViewById(R.id.email);
         rsw = findViewById(R.id.rsw);
         rp = findViewById(R.id.rp);
+        admin = findViewById(R.id.admin);
         modalitiesTextInputEditText = (EditText) findViewById(R.id.modalitiesTextInputEditText);
         timeTextInputEditText = (EditText) findViewById(R.id.timeTextInputEditText);
         populationTextInputEditText = (EditText) findViewById(R.id.populationTextInputEditText);
@@ -61,11 +63,19 @@ public class EditProfileCandidateActivity extends AppCompatActivity {
         populationTextInputEditText.setText(user.population);
         Log.d("dtaaa", user.selectedText);
         if (user.selectedText.equals("RSW(Registered Social Worker)")) {
+            admin.setChecked(false);
             rp.setChecked(false);
             rsw.setChecked(true);
-        } else {
+        } else if (user.selectedText.equals("RP(Registered Psychotherapist)")){
             rsw.setChecked(false);
             rp.setChecked(true);
+            admin.setChecked(false);
+
+        } else{
+            rsw.setChecked(false);
+            rp.setChecked(false);
+            admin.setChecked(true);
+
         }
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +132,9 @@ public class EditProfileCandidateActivity extends AppCompatActivity {
                 userModel.time_in_fields = timeTextInputEditText_str;
                 userModel.population = populationTextInputEditText_str;
                 userModel.selectedText = selectedText;
+                userModel.fcmToken = Stash.getString("token");
+                userModel.profile_img = Stash.getString("cand_img");
+                userModel.pdfUrl = Stash.getString("pdfUrl");
                 userModel.type = "Candidate";
                 Stash.put("type", "Candidate");
 

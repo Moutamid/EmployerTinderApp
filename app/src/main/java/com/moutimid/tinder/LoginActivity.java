@@ -28,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.tinder.R;
 import com.moutimid.tinder.helpers.QuickHelp;
+import com.moutimid.tinder.model.UserModel;
+import com.moutimid.tinder.payments.SignupDialogClass;
 
 import java.util.Objects;
 
@@ -99,16 +101,29 @@ public class LoginActivity extends AppCompatActivity {
                                     FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            UserModel user = snapshot.getValue(UserModel.class);
+                                            Stash.put("employee_user_model", user);
                                             String type = snapshot.child("type").getValue().toString();
                                             String name = snapshot.child("name").getValue().toString();
-                                            Stash.put("user_name", name);
+                                            Stash.put("employee_name", name);
                                             Stash.put("type", type);
                                             show_toast("Successfully Login", 1);
                                             lodingbar.dismiss();
                                             if (type.equals("Employer")) {
-                                                QuickHelp.goToActivityAndFinish(LoginActivity.this, MainActivity.class);
+//                                                if (!Stash.getBoolean("premium")) {
+//                                                    SignupDialogClass cdd = new SignupDialogClass(LoginActivity.this);
+//                                                    cdd.show();
+//                                                } else {
+                                                    QuickHelp.goToActivityAndFinish(LoginActivity.this, MainActivity.class);
+//                                                }
                                             } else {
-                                                QuickHelp.goToActivityAndFinish(LoginActivity.this, HomePage.class);
+                                                String fcmToken = snapshot.child("fcmToken").getValue().toString();
+                                                String profile_img = snapshot.child("profile_img").getValue().toString();
+                                                String pdfUrl = snapshot.child("pdfUrl").getValue().toString();
+                                                Stash.put("cand_img",profile_img );
+                                                Stash.put("pdfUrl",pdfUrl );
+                                                Stash.put("token",fcmToken );
+                                              QuickHelp.goToActivityAndFinish(LoginActivity.this, HomePage.class);
                                             }
                                         }
 

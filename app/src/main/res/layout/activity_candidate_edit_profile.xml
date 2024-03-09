@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="#00000000"
-                    android:hint="Modalities they work with?"
+                    android:hint="Modalities you work with?"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="#00000000"
-                    android:hint="Populations they work with?"
+                    android:hint="Populations you work with?"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,6 +200,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="RSW(Registered Social Worker)"
+                    android:textColor="@color/black" />
+             <RadioButton
+                    android:id="@+id/admin"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Administrative"
                     android:textColor="@color/black" />
             </RadioGroup>
         </LinearLayout>

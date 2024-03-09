@@ -47,12 +47,13 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.Gall
     @Override
     public void onBindViewHolder(@NonNull GalleryPhotosViewHolder holder, final int position) {
         UserModel userModel = userList.get(position);
-        userModel_current = userModel;
         holder.item_name.setText(userModel.name);
         Picasso.get().load(userModel.profile_img).into(holder.item_image);
         holder.itemView.setOnTouchListener((v, event) -> {
             gestureDetector.onTouchEvent(event);
             pos = position;
+            userModel_current = userList.get(position);
+
             return true;
         });
     }

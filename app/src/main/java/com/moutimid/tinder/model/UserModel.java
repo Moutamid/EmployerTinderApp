@@ -8,7 +8,6 @@ public class UserModel implements Serializable {
     public String email;
     public String user_name;
     public String name;
-    public String phone;
     public String modalities;
     public String time_in_fields;
     public String population;
@@ -16,10 +15,16 @@ public class UserModel implements Serializable {
     public String resume;
     public String profile_img;
     public String pdfUrl;
+    public String fcmToken;
     public String type;
     public String selectedText;
     public Boolean premium;
     private static final String PAY_PLAN = "pay_plan";
+    public String company_name;
+    public String bussiness_address;
+    public String practice_time;
+    public String hirings;
+    public String phone_number;
 
     public UserModel() {
     }
@@ -120,4 +125,5 @@ public class UserModel implements Serializable {
             return "";
         }
     }
+
 }

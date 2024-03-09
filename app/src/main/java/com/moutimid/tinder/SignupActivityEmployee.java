@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,12 +24,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.moutamid.tinder.R;
 import com.moutimid.tinder.model.UserModel;
+import com.moutimid.tinder.payments.SignupDialogClass;
 
 import java.util.Objects;
 
 public class SignupActivityEmployee extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword, inputName, inputConfirmPassword;
+    private EditText inputEmail, inputPassword, inputName, inputConfirmPassword, company_name, bussiness_address, practice_time, hirings, phone_number;
     private Button btn_login;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
@@ -43,6 +43,11 @@ public class SignupActivityEmployee extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+        company_name = (EditText) findViewById(R.id.company_name);
+        bussiness_address = (EditText) findViewById(R.id.bussiness_address);
+        practice_time = (EditText) findViewById(R.id.practice_time);
+        hirings = (EditText) findViewById(R.id.hirings);
+        phone_number = (EditText) findViewById(R.id.phone_number);
         inputName = (EditText) findViewById(R.id.name);
         inputConfirmPassword = (EditText) findViewById(R.id.confirm_password);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -57,33 +62,53 @@ public class SignupActivityEmployee extends AppCompatActivity {
                 String password = inputPassword.getText().toString().trim();
                 String name = inputName.getText().toString().trim();
                 String confirm_password = inputConfirmPassword.getText().toString().trim();
+
+                String company_name_str = company_name.getText().toString().trim();
+                String bussiness_address_str = bussiness_address.getText().toString().trim();
+                String practice_time_str = practice_time.getText().toString().trim();
+                String hirings_str = hirings.getText().toString().trim();
+                String phone_number_str = phone_number.getText().toString().trim();
                 Stash.put("name", name);
                 Stash.put("password", password);
                 if (TextUtils.isEmpty(name)) {
-                    show_toast("Enter name", 0);
+                    show_toast(inputName);
                     return;
                 }
                 if (TextUtils.isEmpty(email)) {
-                    show_toast("Enter email address!", 0);
+                    show_toast(inputEmail);
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    show_toast("Enter password!", 0);
+                    show_toast(inputPassword);
                     return;
                 }
                 if (TextUtils.isEmpty(confirm_password)) {
-                    show_toast("Enter confirm password!", 0);
+                    show_toast(inputConfirmPassword);
                     return;
                 }
-
-
+                if (TextUtils.isEmpty(company_name_str)) {
+                    show_toast(company_name);
+                    return;
+                }
+                if (TextUtils.isEmpty(bussiness_address_str)) {
+                    show_toast(bussiness_address);
+                    return;
+                }
+                if (TextUtils.isEmpty(practice_time_str)) {
+                    show_toast(practice_time);
+                    return;
+                }
+                if (TextUtils.isEmpty(phone_number_str)) {
+                    show_toast(phone_number);
+                    return;
+                }
                 if (password.length() < 6) {
-                    show_toast("Password too short, enter minimum 6 characters!", 0);
+                    inputPassword.setError("Password too short, enter minimum 6 characters!");
                     return;
                 }
                 if (!password.equals(confirm_password)) {
-                    show_toast("Password is not matched", 0);
+                    inputPassword.setError("Password too short, enter minimum 6 characters!");
                     inputConfirmPassword.setText("");
                     inputPassword.setText("");
                     return;
@@ -103,32 +128,27 @@ public class SignupActivityEmployee extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    show_toast("Authentication failed." + task.getException(), 0);
+                                    show_data("Authentication failed." + task.getException(), 0);
                                 } else {
+
+
                                     UserModel userModel = new UserModel();
                                     userModel.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     userModel.email = email;
                                     userModel.name = name;
                                     userModel.type = "Employer";
+                                    userModel.company_name = company_name_str;
+                                    userModel.bussiness_address = bussiness_address_str;
+                                    userModel.practice_time = practice_time_str;
+                                    userModel.hirings = hirings_str;
+                                    userModel.phone_number = phone_number_str;
                                     Stash.put("type", "Employer");
-                                    FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Stash.put("user", userModel);
-                                            Stash.put("user_name", name);
-                                            show_toast("Account is created successfully", 1);
-                                            startActivity(new Intent(SignupActivityEmployee.this, MainActivity.class));
-                                            lodingbar.dismiss();
-                                            finishAffinity();
+                                    Stash.put("employee_user_model", userModel);
+                                    Stash.put("employee_name", name);
+                                    lodingbar.dismiss();
 
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            lodingbar.dismiss();
-                                            show_toast("Something went wrong. Please try again", 0);
-                                        }
-                                    });
+                                    SignupDialogClass cdd = new SignupDialogClass(SignupActivityEmployee.this);
+                                    cdd.show();
 
                                 }
                             }
@@ -148,8 +168,12 @@ public class SignupActivityEmployee extends AppCompatActivity {
         onBackPressed();
     }
 
-    public void show_toast(String message, int type) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void show_toast(EditText editText) {
+        editText.setText("required");
     }
 
+
+    public void show_data(String message, int type) {
+        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+    }
 }

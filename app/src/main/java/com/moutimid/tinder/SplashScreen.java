@@ -12,6 +12,7 @@ import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseAuth;
 import com.moutamid.tinder.R;
 import com.moutimid.tinder.helpers.QuickHelp;
+import com.moutimid.tinder.payments.SignupDialogClass;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -34,7 +35,12 @@ public class SplashScreen extends AppCompatActivity {
             String type = Stash.getString("type");
             Log.d("dtaa", type + " test");
             if (type.equals("Employer")) {
-                QuickHelp.goToActivityAndFinish(this, MainActivity.class);
+//                if (!Stash.getBoolean("premium")) {
+//                    SignupDialogClass cdd = new SignupDialogClass(SplashScreen.this);
+//                    cdd.show();
+//                } else {
+                    QuickHelp.goToActivityAndFinish(this, MainActivity.class);
+//                }
             } else {
                 QuickHelp.goToActivityAndFinish(this, HomePage.class);
             }

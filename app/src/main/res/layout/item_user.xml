@@ -13,9 +13,9 @@
 
         <ImageView
             android:id="@+id/profile_img"
+            android:background="#F3F3F3"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
-            android:src="@drawable/download"
             android:scaleType="fitXY"/>
     </androidx.cardview.widget.CardView>
 

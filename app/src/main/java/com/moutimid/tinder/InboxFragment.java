@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -100,12 +101,14 @@ public class InboxFragment extends Fragment {
         private TextView nameTextView;
         private TextView lastMessageTextView;
         ImageView profile;
+        CardView main_lyt;
 
         public InboxViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.inbox_item_name);
             lastMessageTextView = itemView.findViewById(R.id.inbox_item_last_message);
             profile = itemView.findViewById(R.id.profile);
+            main_lyt = itemView.findViewById(R.id.main_lyt);
         }
 
         public void bind(UserModel user, LastMessageItem lastMessageItem, Context context) {
@@ -119,7 +122,7 @@ public class InboxFragment extends Fragment {
 
             }
             lastMessageTextView.setText(lastMessageItem.getLastMessage());
-            profile.setOnClickListener(new View.OnClickListener() {
+            main_lyt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ChatActivity.class);

@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
         delete_data = view.findViewById(R.id.delete_data);
         share = view.findViewById(R.id.share);
         name_latter = view.findViewById(R.id.textView5);
-        String userName = Stash.getString("user_name");
+        String userName = Stash.getString("employee_name");
         name_txt.setText(userName);
         char c = userName.charAt(0);
         name_latter.setText(c + "");
@@ -72,7 +72,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onResume() {
-        String userName = Stash.getString("user_name");
+        String userName = Stash.getString("employee_name");
         name_txt.setText(userName);
         char c = userName.charAt(0);
         name_latter.setText(c + "");

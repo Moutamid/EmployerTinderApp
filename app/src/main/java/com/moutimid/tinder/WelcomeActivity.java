@@ -58,7 +58,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 if (sheetDialog.isShowing()) {
                     sheetDialog.dismiss();
                     QuickHelp.goToActivityWithNoClean(WelcomeActivity.this, SignupActivity.class);
-                    //todo for find room
                 }
             });
         }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:id="@+id/main_lyt"
     android:orientation="vertical"
     app:cardBackgroundColor="#F3F3F3"
 
@@ -29,8 +30,7 @@
                 android:id="@+id/profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/model2" />
+                android:scaleType="fitXY" />
 
         </androidx.cardview.widget.CardView>
 
@@ -43,7 +43,7 @@
             android:layout_toRightOf="@+id/imageView9"
             android:fontFamily="@font/kanit_regular"
             android:maxLines="1"
-            android:text="Julie"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="14dp" />
 
@@ -54,7 +54,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/imageView9"
             android:fontFamily="@font/kanit_regular"
-            android:text="Julie"
+            android:text=""
             android:id="@+id/inbox_item_last_message"
             android:maxLines="1"
 
