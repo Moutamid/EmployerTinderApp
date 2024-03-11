@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.moutamid.tinder.R;
 import com.moutimid.tinder.helpers.QuickHelp;
 import com.moutimid.tinder.model.UserModel;
-import com.moutimid.tinder.payments.SignupDialogClass;
 
 import java.util.Objects;
 
@@ -78,64 +76,68 @@ public class LoginActivity extends AppCompatActivity {
 
                     return;
                 }
+                if (email.equals("tinderadmin@gmail.com") && password.equals("tinderadmin123")) {
+                    QuickHelp.goToActivityAndFinish(LoginActivity.this, com.moutimid.tinder.Admin.MainActivity.class);
+                    Stash.put("admin_login", true);
 
-
-                //authenticate user
-                auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    if (password.length() < 6) {
-                                        show_toast(getString(R.string.minimum_password), 0);
+                } else {
+                    //authenticate user
+                    auth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        if (password.length() < 6) {
+                                            show_toast(getString(R.string.minimum_password), 0);
+                                        } else {
+                                            show_toast(getString(R.string.auth_failed), 0);
+                                        }
                                     } else {
-                                        show_toast(getString(R.string.auth_failed), 0);
-                                    }
-                                } else {
-                                    Dialog lodingbar = new Dialog(LoginActivity.this);
-                                    lodingbar.setContentView(R.layout.loading);
-                                    Objects.requireNonNull(lodingbar.getWindow()).setBackgroundDrawable(new ColorDrawable(UCharacter.JoiningType.TRANSPARENT));
-                                    lodingbar.setCancelable(false);
-                                    lodingbar.show();
+                                        Dialog lodingbar = new Dialog(LoginActivity.this);
+                                        lodingbar.setContentView(R.layout.loading);
+                                        Objects.requireNonNull(lodingbar.getWindow()).setBackgroundDrawable(new ColorDrawable(UCharacter.JoiningType.TRANSPARENT));
+                                        lodingbar.setCancelable(false);
+                                        lodingbar.show();
 
-                                    FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            UserModel user = snapshot.getValue(UserModel.class);
-                                            Stash.put("employee_user_model", user);
-                                            String type = snapshot.child("type").getValue().toString();
-                                            String name = snapshot.child("name").getValue().toString();
-                                            Stash.put("employee_name", name);
-                                            Stash.put("type", type);
-                                            show_toast("Successfully Login", 1);
-                                            lodingbar.dismiss();
-                                            if (type.equals("Employer")) {
+                                        FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                UserModel user = snapshot.getValue(UserModel.class);
+                                                Stash.put("employee_user_model", user);
+                                                String type = snapshot.child("type").getValue().toString();
+                                                String name = snapshot.child("name").getValue().toString();
+                                                Stash.put("employee_name", name);
+                                                Stash.put("type", type);
+                                                show_toast("Successfully Login", 1);
+                                                lodingbar.dismiss();
+                                                if (type.equals("Employer")) {
 //                                                if (!Stash.getBoolean("premium")) {
 //                                                    SignupDialogClass cdd = new SignupDialogClass(LoginActivity.this);
 //                                                    cdd.show();
 //                                                } else {
                                                     QuickHelp.goToActivityAndFinish(LoginActivity.this, MainActivity.class);
 //                                                }
-                                            } else {
-                                                String fcmToken = snapshot.child("fcmToken").getValue().toString();
-                                                String profile_img = snapshot.child("profile_img").getValue().toString();
-                                                String pdfUrl = snapshot.child("pdfUrl").getValue().toString();
-                                                Stash.put("cand_img",profile_img );
-                                                Stash.put("pdfUrl",pdfUrl );
-                                                Stash.put("token",fcmToken );
-                                              QuickHelp.goToActivityAndFinish(LoginActivity.this, HomePage.class);
+                                                } else {
+                                                    String fcmToken = snapshot.child("fcmToken").getValue().toString();
+                                                    String profile_img = snapshot.child("profile_img").getValue().toString();
+                                                    String pdfUrl = snapshot.child("pdfUrl").getValue().toString();
+                                                    Stash.put("cand_img", profile_img);
+                                                    Stash.put("pdfUrl", pdfUrl);
+                                                    Stash.put("token", fcmToken);
+                                                    QuickHelp.goToActivityAndFinish(LoginActivity.this, HomePage.class);
+                                                }
                                             }
-                                        }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                        }
-                                    });
+                                            }
+                                        });
+                                    }
                                 }
-                            }
 
-                        });
+                            });
+                }
             }
         });
     }

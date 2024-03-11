@@ -12,7 +12,6 @@ import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseAuth;
 import com.moutamid.tinder.R;
 import com.moutimid.tinder.helpers.QuickHelp;
-import com.moutimid.tinder.payments.SignupDialogClass;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -30,22 +29,25 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     public void goToApp() {
-
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            String type = Stash.getString("type");
-            Log.d("dtaa", type + " test");
-            if (type.equals("Employer")) {
-                if (!Stash.getBoolean("premium")) {
-                    QuickHelp.goToActivityAndFinish(this, WelcomeActivity.class);
-                } else {
-                    QuickHelp.goToActivityAndFinish(this, MainActivity.class);
-                }
+if (Stash.getBoolean("admin_login")) {
+    QuickHelp.goToActivityAndFinish(SplashScreen.this, com.moutimid.tinder.Admin.MainActivity.class);
+} else {
+    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        String type = Stash.getString("type");
+        Log.d("dtaa", type + " test");
+        if (type.equals("Employer")) {
+            if (!Stash.getBoolean("premium")) {
+                QuickHelp.goToActivityAndFinish(this, WelcomeActivity.class);
             } else {
-                QuickHelp.goToActivityAndFinish(this, HomePage.class);
+                QuickHelp.goToActivityAndFinish(this, MainActivity.class);
             }
-
         } else {
-            QuickHelp.goToActivityAndFinish(this, WelcomeActivity.class);
+            QuickHelp.goToActivityAndFinish(this, HomePage.class);
         }
+
+    } else {
+        QuickHelp.goToActivityAndFinish(this, WelcomeActivity.class);
+    }
+}
     }
 }

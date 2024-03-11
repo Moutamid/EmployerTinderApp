@@ -9,7 +9,6 @@
         android:id="@+id/PBody"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:background="@color/white">
 
 
@@ -101,204 +100,16 @@
 
                 </RelativeLayout>
 
-
-                <LinearLayout
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/questionsLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:fontFamily="@font/kanit_medium"
-                        android:text="Name"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/kanit_regular"
-                        android:textColor="#7E7A7A"
-                        android:textSize="13dp" />
+                    >
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:fontFamily="@font/kanit_medium"
-                        android:text="Company Name"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/company_name"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/kanit_regular"
-                        android:textColor="#7E7A7A"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:fontFamily="@font/kanit_medium"
-                        android:text="Business Address"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/bussiness_address"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/kanit_regular"
-                        android:textColor="#7E7A7A"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-         <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:fontFamily="@font/kanit_medium"
-                        android:text="How long you practice for?"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/practice"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/kanit_regular"
-                        android:textColor="#7E7A7A"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-         <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:fontFamily="@font/kanit_medium"
-                        android:text="How many hirings do you do a month"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/hiring"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/kanit_regular"
-                        android:textColor="#7E7A7A"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-         <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:fontFamily="@font/kanit_medium"
-                        android:text="Phone number"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/phone_number"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/kanit_regular"
-                        android:textColor="#7E7A7A"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-         <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:fontFamily="@font/kanit_medium"
-                        android:text="Email Address"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/email_address"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/kanit_regular"
-                        android:textColor="#7E7A7A"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
 
 
             </LinearLayout>

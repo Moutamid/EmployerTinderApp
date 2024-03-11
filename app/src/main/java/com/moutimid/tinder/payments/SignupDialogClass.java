@@ -22,6 +22,9 @@ import com.moutamid.tinder.R;
 import com.moutimid.tinder.MainActivity;
 import com.moutimid.tinder.model.UserModel;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignupDialogClass extends Dialog implements
         View.OnClickListener {
 
@@ -54,8 +57,13 @@ public class SignupDialogClass extends Dialog implements
         if (id == R.id.yes) {
             Stash.put("premium", true);
             UserModel employeeUserModel = (UserModel) Stash.getObject("employee_user_model", UserModel.class);
+            Map<String, Object> currentUser = new HashMap<>();
+            currentUser.put("name",employeeUserModel.name );
+            currentUser.put("email",employeeUserModel.email );
+            currentUser.put("type",employeeUserModel.type );
+            currentUser.put("uid",employeeUserModel.uid );
 
-            FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(employeeUserModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(currentUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Intent intent = new Intent(getContext(), MainActivity.class);

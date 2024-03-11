@@ -54,8 +54,10 @@ public class UserListFragment extends Fragment implements UserAdapter.OnItemClic
                 userList.clear();
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     UserModel user = userSnapshot.getValue(UserModel.class);
-                    if (user.type.equals("Candidate")) {
-                        userList.add(user);
+                    if (userSnapshot.hasChild("name")) {
+                        if (user.type.equals("Candidate")) {
+                            userList.add(user);
+                        }
                     }
                 }
                 userAdapter.notifyDataSetChanged();

@@ -2,7 +2,6 @@ package com.moutimid.tinder;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,10 +125,11 @@ public class SwipeFragment extends Fragment {
                 userList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserModel userModel = snapshot.getValue(UserModel.class);
-                    if (!Stash.getBoolean(userModel.uid, false) && userModel.type.equals("Candidate")) {
-                        userList.add(userModel);
+                    if (snapshot.hasChild("name")) {
+                        if (!Stash.getBoolean(userModel.uid, false) && userModel.type.equals("Candidate")) {
+                            userList.add(userModel);
+                        }
                     }
-
                 }
                 if(userList.size()<1)
                 {

@@ -1,37 +1,45 @@
 package com.moutimid.tinder;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fxn.stash.Stash;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.tinder.R;
 import com.moutimid.tinder.model.UserModel;
 
 public class CandidateDetailsActivity extends AppCompatActivity {
-
+    private LinearLayout questionsLayout;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_candidate_details);
         UserModel userModel = (UserModel) Stash.getObject("employee_details_user_model", UserModel.class);
-        TextView nameTextView = findViewById(R.id.name);
-        TextView companyNameTextView = findViewById(R.id.company_name);
-        TextView businessAddressTextView = findViewById(R.id.bussiness_address);
-        TextView practiceTextView = findViewById(R.id.practice);
-        TextView hiringTextView = findViewById(R.id.hiring);
-        TextView phoneNumberTextView = findViewById(R.id.phone_number);
-        TextView emailAddressTextView = findViewById(R.id.email_address);
-        nameTextView.setText(userModel.name);
-        companyNameTextView.setText(userModel.company_name);
-        businessAddressTextView.setText(userModel.bussiness_address);
-        practiceTextView.setText(userModel.practice_time);
-        hiringTextView.setText(userModel.hirings);
-        phoneNumberTextView.setText(userModel.phone_number);
-        emailAddressTextView.setText(userModel.email);
+
+        questionsLayout = findViewById(R.id.questionsLayout);
+
+        // Initialize Firebase
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users").child(userModel.uid).child("question");
+
+        // Load questions from Firebase
+        loadQuestions();
+
+
     }
 
     @Override
@@ -46,4 +54,33 @@ public class CandidateDetailsActivity extends AppCompatActivity {
     public void back(View view) {
         onBackPressed();
     }
+    private void loadQuestions() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot questionSnapshot : dataSnapshot.getChildren()) {
+                    String questionKey = questionSnapshot.getKey();
+                    String questionText = (String) questionSnapshot.child("text").getValue();
+                    String answerText = (String) questionSnapshot.child("answer").getValue();
+
+                    // Create LinearLayout
+                    LinearLayout textInputLayout = (LinearLayout) LayoutInflater.from(CandidateDetailsActivity.this)
+                            .inflate(R.layout.employer_details, questionsLayout, false);
+
+                    // Create TextInputEditText
+                    TextView question = textInputLayout.findViewById(R.id.question);
+                    TextView ans = textInputLayout.findViewById(R.id.ans);
+                    question.setText(questionText);
+                    ans.setText(answerText);
+                    questionsLayout.addView(textInputLayout);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+    }
+
 }

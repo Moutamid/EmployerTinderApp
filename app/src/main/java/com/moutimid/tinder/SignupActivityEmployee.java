@@ -1,14 +1,16 @@
 package com.moutimid.tinder;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.lang.UCharacter;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -17,12 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.tinder.R;
+import com.moutimid.tinder.Admin.Model.Question;
 import com.moutimid.tinder.model.UserModel;
 import com.moutimid.tinder.payments.SignupDialogClass;
 
@@ -30,10 +38,12 @@ import java.util.Objects;
 
 public class SignupActivityEmployee extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword, inputName, inputConfirmPassword, company_name, bussiness_address, practice_time, hirings, phone_number;
+    private EditText inputEmail, inputPassword, inputName, inputConfirmPassword;
     private Button btn_login;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private LinearLayout questionsLayout;
+    DatabaseReference databaseReference, databaseReferencequestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +52,10 @@ public class SignupActivityEmployee extends AppCompatActivity {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-
-        company_name = (EditText) findViewById(R.id.company_name);
-        bussiness_address = (EditText) findViewById(R.id.bussiness_address);
-        practice_time = (EditText) findViewById(R.id.practice_time);
-        hirings = (EditText) findViewById(R.id.hirings);
-        phone_number = (EditText) findViewById(R.id.phone_number);
+        questionsLayout = findViewById(R.id.questionsLayout);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("questions");
+        databaseReferencequestions = FirebaseDatabase.getInstance().getReference().child("TinderEmployeeApp").child("Users");
+        loadQuestions();
         inputName = (EditText) findViewById(R.id.name);
         inputConfirmPassword = (EditText) findViewById(R.id.confirm_password);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -63,11 +71,6 @@ public class SignupActivityEmployee extends AppCompatActivity {
                 String name = inputName.getText().toString().trim();
                 String confirm_password = inputConfirmPassword.getText().toString().trim();
 
-                String company_name_str = company_name.getText().toString().trim();
-                String bussiness_address_str = bussiness_address.getText().toString().trim();
-                String practice_time_str = practice_time.getText().toString().trim();
-                String hirings_str = hirings.getText().toString().trim();
-                String phone_number_str = phone_number.getText().toString().trim();
                 Stash.put("name", name);
                 Stash.put("password", password);
                 if (TextUtils.isEmpty(name)) {
@@ -87,22 +90,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
                     show_toast(inputConfirmPassword);
                     return;
                 }
-                if (TextUtils.isEmpty(company_name_str)) {
-                    show_toast(company_name);
-                    return;
-                }
-                if (TextUtils.isEmpty(bussiness_address_str)) {
-                    show_toast(bussiness_address);
-                    return;
-                }
-                if (TextUtils.isEmpty(practice_time_str)) {
-                    show_toast(practice_time);
-                    return;
-                }
-                if (TextUtils.isEmpty(phone_number_str)) {
-                    show_toast(phone_number);
-                    return;
-                }
+
                 if (password.length() < 6) {
                     inputPassword.setError("Password too short, enter minimum 6 characters!");
                     return;
@@ -131,27 +119,18 @@ public class SignupActivityEmployee extends AppCompatActivity {
                                     lodingbar.dismiss();
                                     show_data("Authentication failed." + task.getException(), 0);
                                 } else {
-
-
                                     UserModel userModel = new UserModel();
                                     userModel.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     userModel.email = email;
                                     userModel.name = name;
                                     userModel.type = "Employer";
-                                    userModel.company_name = company_name_str;
-                                    userModel.bussiness_address = bussiness_address_str;
-                                    userModel.practice_time = practice_time_str;
-                                    userModel.hirings = hirings_str;
-                                    userModel.phone_number = phone_number_str;
                                     Stash.put("type", "Employer");
                                     Stash.put("employee_user_model", userModel);
                                     Stash.put("employee_name", name);
                                     Stash.put("premium", false);
-
+                                    saveEditedQuestions(userModel.uid);
                                     lodingbar.dismiss();
 
-                                    SignupDialogClass cdd = new SignupDialogClass(SignupActivityEmployee.this);
-                                    cdd.show();
 
                                 }
                             }
@@ -178,5 +157,51 @@ public class SignupActivityEmployee extends AppCompatActivity {
 
     public void show_data(String message, int type) {
         Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void loadQuestions() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Question question = snapshot.getValue(Question.class);
+                    if (question != null) {
+                        addEditText(question.getText(), snapshot.getKey());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+    }
+
+    private void addEditText(String text, String key) {
+        TextInputLayout textInputLayout = (TextInputLayout) LayoutInflater.from(this).inflate(R.layout.item_edit_question, questionsLayout, false);
+        textInputLayout.setHint(text);
+        textInputLayout.setTag(key);
+        questionsLayout.addView(textInputLayout);
+    }
+
+    private void saveEditedQuestions(String uid) {
+        for (int i = 0; i < questionsLayout.getChildCount(); i++) {
+            TextInputLayout textInputLayout = (TextInputLayout) questionsLayout.getChildAt(i);
+            String key = (String) textInputLayout.getTag();
+            String question = textInputLayout.getHint().toString();
+            TextInputEditText textInputEditText = textInputLayout.findViewById(R.id.editTextQuestion);
+            String answer = textInputEditText.getText().toString().trim();
+            if (!answer.isEmpty()) {
+                saveQuestionAndAnswer(key, question, answer, uid);
+            }
+        }
+        SignupDialogClass cdd = new SignupDialogClass(SignupActivityEmployee.this);
+        cdd.show();
+    }
+
+    private void saveQuestionAndAnswer(String key, String question, String answer, String uid) {
+        databaseReferencequestions.child(uid).child("question").child(key).child("text").setValue(question);
+        databaseReferencequestions.child(uid).child("question").child(key).child("answer").setValue(answer);
     }
 }
